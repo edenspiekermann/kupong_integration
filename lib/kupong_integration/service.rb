@@ -1,5 +1,4 @@
 require 'json'
-require 'pry'
 
 module KupongIntegration  
   class Service
@@ -16,6 +15,8 @@ module KupongIntegration
     SETTINGS_ATTRIBUTES = %i(
       authorization
       coupon_id
+      proxy
+      proxyuserpwd
     )
     
     SUCCESS_CODE = 200
