@@ -16,7 +16,6 @@ module KupongIntegration
       authorization
       coupon_id
       proxy
-      proxyuserpwd
     )
     
     SUCCESS_CODE = 200
@@ -42,7 +41,7 @@ module KupongIntegration
     private
     
     def api_url 
-      @@api_url
+      @@api_url ||= DEFAULT_API_URL
     end
     
     def create_coupon
@@ -61,7 +60,7 @@ module KupongIntegration
     end
     
     def created?(response)
-      response.code == CREATED_CODE
+      response.http_code == CREATED_CODE
     end
     
     def headers 
