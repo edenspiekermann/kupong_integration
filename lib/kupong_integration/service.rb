@@ -1,13 +1,18 @@
 require 'json'
 require 'pry'
 
-module KupongIntegration
+module KupongIntegration  
   class Service
     DEFAULT_API_URL = 'https://api.kupong.se/v1.5/coupons'.freeze
     
     DEFAULT_SETTINGS = {}.freeze
     DEFAULT_PARAMS   = {}.freeze
     DEFAULT_API_PATH = ''.freeze
+    
+    SETTINGS_ATTRIBUTES = %i(
+      authorization
+      coupon_id
+    )
     
     SUCCESS_CODE = 200
     CREATED_CODE = 201
