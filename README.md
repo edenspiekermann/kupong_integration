@@ -23,7 +23,7 @@ Or install it yourself as:
 ### Initlialize
 
 ```ruby
-# ./confic/initializers/kupong_integration.rb
+# ./config/initializers/kupong_integration.rb
 
 KupongIntegration.config(api_url: 'https://to.kupong.se/api')
 ```
@@ -35,9 +35,9 @@ service = KupongIntegration::Service.new(settings:, phone:)
 service.call
 ```
 
-The needed keys in configs are stored in `KupongIntegration::Service::SETTINGS_ATTRIBUTES`, which contains `authorization`, `coupon_id` and `proxy`. 
+The required keys in configs are stored in `KupongIntegration::Service::SETTINGS_ATTRIBUTES`, which contains `authorization`, `coupon_id` and `proxy`. 
 
-The phone number gets automatically sanitized and the country code (`KupongIntegration::Service::COUNTRY_CODE`) is been added, if it's not part of the phone number already. 
+The phone number gets automatically sanitized and the country code (`KupongIntegration::Service::COUNTRY_CODE`) is added, if it's not part of the phone number already. 
 
 ## Development
 
