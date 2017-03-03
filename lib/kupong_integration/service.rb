@@ -5,8 +5,12 @@ module KupongIntegration
   class Service
     DEFAULT_API_URL = 'https://api.kupong.se/v1.5/coupons'.freeze
     
+    PLUS = '+'.freeze
+    CODE = '49'.freeze
+    COUNTRY_CODE = (PLUS + CODE).freeze
+    EMPTY_STRING = ''.freeze
+    
     DEFAULT_SETTINGS = {}.freeze
-    DEFAULT_PARAMS   = {}.freeze
     DEFAULT_API_PATH = ''.freeze
     
     SETTINGS_ATTRIBUTES = %i(
@@ -17,15 +21,15 @@ module KupongIntegration
     SUCCESS_CODE = 200
     CREATED_CODE = 201
     
-    attr_reader :settings, :params, :timestamp 
+    attr_reader :settings, :msisdn, :timestamp
     
     def self.config(api_url: nil)
       @@api_url = api_url || DEFAULT_API_URL
     end
       
-    def initialize(settings: DEFAULT_SETTINGS, params: DEFAULT_PARAMS)
+    def initialize(settings: DEFAULT_SETTINGS, phone:)
       @settings  = settings
-      @params    = params
+      @msisdn    = sanitize(phone)
       @timestamp = Time.now.to_i.to_s
     end
     
@@ -83,14 +87,16 @@ module KupongIntegration
       }
     end
     
+    # remove the '+' sign & add '49' in case it's not there
+    def sanitize(phone)
+      phone = phone.tr(PLUS, EMPTY_STRING)
+      phone.start_with?(CODE) ? phone : CODE + phone
+    end
+
     def authorization
       settings[:authorization]
     end
-    
-    def msisdn
-      params[:phone]
-    end
-      
+          
     def coupon_id
       settings[:coupon_id]
     end

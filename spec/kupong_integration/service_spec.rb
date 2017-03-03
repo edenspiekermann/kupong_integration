@@ -3,10 +3,10 @@ require 'rest-client'
 
 describe KupongIntegration::Service do 
   let(:settings) { { authorization: 'abcd', coupon_id: '1'} }
-  let(:params)   { { phone: '4681531415926' } }
+  let(:phone)    { '4681531415926' }
   
   let(:service) do
-    KupongIntegration::Service.new(settings: settings, params: params)
+    KupongIntegration::Service.new(settings: settings, phone: phone)
   end
    
   before { KupongIntegration::Service.config } 
