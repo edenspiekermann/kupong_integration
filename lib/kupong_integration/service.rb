@@ -5,7 +5,7 @@ module KupongIntegration
     DEFAULT_API_URL = 'https://api.kupong.se/v1.5/coupons'.freeze
     
     PLUS = '+'.freeze
-    CODE = '49'.freeze
+    CODE = '46'.freeze
     COUNTRY_CODE = (PLUS + CODE).freeze
     EMPTY_STRING = ''.freeze
     
