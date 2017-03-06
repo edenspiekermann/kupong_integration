@@ -3,6 +3,7 @@ require 'json'
 module KupongIntegration  
   class Service
     DEFAULT_API_URL = 'https://api.kupong.se/v1.5/coupons'.freeze
+    SEND_PATH = '/send'.freeze
     
     PLUS = '+'.freeze
     CODE = '46'.freeze
@@ -15,11 +16,12 @@ module KupongIntegration
     SETTINGS_ATTRIBUTES = %i(
       authorization
       coupon_id
-      proxy
     )
     
     SUCCESS_CODE = 200
     CREATED_CODE = 201
+    
+    SANITIZE = '+ -'.freeze
     
     attr_reader :settings, :msisdn, :timestamp
     
@@ -35,7 +37,7 @@ module KupongIntegration
     
     def call 
       response = create_coupon
-      created?(response) ? send_coupon(response) : response
+      send_coupon(response)
     end
     
     private
@@ -49,20 +51,18 @@ module KupongIntegration
     end
     
     def send_coupon(response)
-      coupon_code = response['coupon_code']
-      api_call(api_path: '/send', payload: send_payload(coupon_code))
+      coupon_code = JSON.parse(response)['couponCode']
+      return response if coupon_code.blank?
+      
+      api_call(api_path: SEND_PATH, payload: send_payload(coupon_code))
     end
     
-    def api_call(api_path: DEFAULT_API_PATH, payload:) 
+    def api_call(api_path: DEFAULT_API_PATH, payload:)
       RestClient.post(api_url + api_path, payload.to_json, headers)
     rescue RestClient::Exception => error
-      error
+      error.response
     end
-    
-    def created?(response)
-      response.http_code == CREATED_CODE
-    end
-    
+        
     def headers 
       {
         content_type:  :json,
@@ -74,8 +74,8 @@ module KupongIntegration
     def create_payload 
       {
         msisdn:     msisdn,
-        couponID:   coupon_id, 
-        identifier: identifier
+        couponId:   coupon_id,
+        identifier: identifier        
       }
     end 
     
@@ -89,7 +89,7 @@ module KupongIntegration
     
     # remove the '+' sign & add '49' in case it's not there
     def sanitize(phone)
-      phone = phone.tr(PLUS, EMPTY_STRING)
+      phone = phone.tr(SANITIZE, EMPTY_STRING)
       phone.start_with?(CODE) ? phone : CODE + phone
     end
 
