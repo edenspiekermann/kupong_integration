@@ -12,6 +12,7 @@ module KupongIntegration
     
     DEFAULT_SETTINGS = {}.freeze
     DEFAULT_API_PATH = ''.freeze
+    EMPTY_HASH       = {}.freeze
     
     SETTINGS_ATTRIBUTES = %i(
       authorization
@@ -51,8 +52,8 @@ module KupongIntegration
     end
     
     def send_coupon(response)
-      coupon_code = JSON.parse(response)['couponCode']
-      return response if coupon_code.blank?
+      coupon_code = retrieve_coupon_code(response)
+      return response if coupon_code.nil?
       
       api_call(api_path: SEND_PATH, payload: send_payload(coupon_code))
     end
@@ -107,6 +108,17 @@ module KupongIntegration
     
     def send_on
       DateTime.now
+    end
+    
+    def retrieve_coupon_code(response)
+      parsed_response = 
+      begin 
+        JSON.parse(response)
+      rescue JSON::ParserError => e
+        EMPTY_HASH
+      end
+      
+      parsed_response['couponCode']
     end
   end
 end
