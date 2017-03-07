@@ -10,3 +10,12 @@
 
 # rspec failure tracking
 .rspec_status
+
+# Mac OS finder file 
+.DS_Store
+
+# Git generated files
+*.orig
+
+# RSpec config 
+.rspec 
