@@ -95,11 +95,11 @@ module KupongIntegration
     end
 
     def authorization
-      settings[:authorization]
+      settings[:authorization] || settings['authorization']
     end
           
     def coupon_id
-      settings[:coupon_id]
+      settings[:coupon_id] || settings['coupon_id']
     end
     
     def identifier
