@@ -10,7 +10,7 @@ describe KupongIntegration::Service do
   end
   
   let(:create_api_url) { KupongIntegration::Service::DEFAULT_API_URL }
-  let(:send_api_url)   { create_api_url + KupongIntegration::Service::SEND_PATH }
+  let(:send_api_url)   { create_api_url + KupongIntegration::Service::SEND_API_PATH }
   
   before { KupongIntegration::Service.config } 
   
