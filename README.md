@@ -25,17 +25,21 @@ Or install it yourself as:
 ```ruby
 # ./config/initializers/kupong_integration.rb
 
-KupongIntegration.config(api_url: 'https://to.kupong.se/api')
+KupongIntegration.config(api_url: 'https://api.kupong.se/correct_version/coupons')
 ```
 If you don't initialize the KupongIntegration, it will use the default API-URL, which is currently: `http://api.kupong.se/v1.5/coupons`. 
 
 ### Send Voucher
 ```ruby
-service = KupongIntegration::Service.new(settings:, phone:)
+# example
+service = KupongIntegration::Service.new(
+  settings: { authorization: 'xyz', coupon_id: '42' }, 
+  phone: '7000 000 00'
+)
 service.call
 ```
 
-The required keys in configs are stored in `KupongIntegration::Service::SETTINGS_ATTRIBUTES`, which contains `authorization`, `coupon_id` and `proxy`. 
+The required keys in configs are stored in `KupongIntegration::Service::SETTINGS_ATTRIBUTES`, which contains `authorization` and `coupon_id`. 
 
 The phone number gets automatically sanitized and the country code (`KupongIntegration::Service::COUNTRY_CODE`) is added, if it's not part of the phone number already. 
 
@@ -44,6 +48,10 @@ The phone number gets automatically sanitized and the country code (`KupongInteg
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+
+## Tests 
+
+Execute `bundle exec rspec .` to run the existing tests.
 
 ## Contributing
 

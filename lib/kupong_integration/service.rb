@@ -2,8 +2,9 @@ require 'json'
 
 module KupongIntegration  
   class Service
-    DEFAULT_API_URL = 'https://api.kupong.se/v1.5/coupons'.freeze
-    SEND_PATH = '/send'.freeze
+    DEFAULT_API_URL  = 'https://api.kupong.se/v1.5/coupons'.freeze
+    DEFAULT_API_PATH = ''.freeze
+    SEND_API_PATH    = '/send'.freeze
     
     PLUS = '+'.freeze
     CODE = '46'.freeze
@@ -11,7 +12,6 @@ module KupongIntegration
     EMPTY_STRING = ''.freeze
     
     DEFAULT_SETTINGS = {}.freeze
-    DEFAULT_API_PATH = ''.freeze
     EMPTY_HASH       = {}.freeze
     
     SETTINGS_ATTRIBUTES = %i(
@@ -55,7 +55,7 @@ module KupongIntegration
       coupon_code = retrieve_coupon_code(response)
       return response if coupon_code.nil?
       
-      api_call(api_path: SEND_PATH, payload: send_payload(coupon_code))
+      api_call(api_path: SEND_API_PATH, payload: send_payload(coupon_code))
     end
     
     def api_call(api_path: DEFAULT_API_PATH, payload:)
@@ -95,11 +95,11 @@ module KupongIntegration
     end
 
     def authorization
-      settings[:authorization]
+      settings[:authorization] || settings['authorization']
     end
           
     def coupon_id
-      settings[:coupon_id]
+      settings[:coupon_id] || settings['coupon_id']
     end
     
     def identifier
