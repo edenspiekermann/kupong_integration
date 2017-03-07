@@ -2,8 +2,9 @@ require 'json'
 
 module KupongIntegration  
   class Service
-    DEFAULT_API_URL = 'https://api.kupong.se/v1.5/coupons'.freeze
-    SEND_PATH = '/send'.freeze
+    DEFAULT_API_URL  = 'https://api.kupong.se/v1.5/coupons'.freeze
+    DEFAULT_API_PATH = ''.freeze
+    SEND_PATH        = '/send'.freeze
     
     PLUS = '+'.freeze
     CODE = '46'.freeze
@@ -11,7 +12,6 @@ module KupongIntegration
     EMPTY_STRING = ''.freeze
     
     DEFAULT_SETTINGS = {}.freeze
-    DEFAULT_API_PATH = ''.freeze
     EMPTY_HASH       = {}.freeze
     
     SETTINGS_ATTRIBUTES = %i(
